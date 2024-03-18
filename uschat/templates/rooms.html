@@ -1,0 +1,23 @@
+{% extends "base.html" %} 
+{% block title %}Rooms {% endblock%} 
+{% block content%} 
+{% if user.is_authenticated %} Hi {{ user.username }}!
+  <form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Log Out</button>
+  </form>
+  {% for room in rooms %}
+  <div class="card" style="width: 18rem;">
+    <div class="card-body"> 
+      <h5 class="card-title">{{room.name}}</h5>
+      <p class="card-text">{{room.slug}}</p>
+      <a href="{{room.slug}}" class="btn btn-primary">Go to Room</a>
+    </div>
+  </div>
+  <br>
+  {% endfor %}
+{% else %}
+<p>You are not logged in</p>
+<a href="{% url 'login' %}">Log In</a>
+{% endif %}
+{% endblock %}
